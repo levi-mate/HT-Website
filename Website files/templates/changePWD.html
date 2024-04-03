@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Change password
+{% endblock %}
+
+{% block content %}
+<div class="basic-grid">
+    <div class="basic-grid-form">
+        <h1>Change Password</h1>
+
+        <form method="post" action="/changepwd" class="flexCol">
+            {{ form.csrf_token }}
+            {{ form.hidden_tag() }}
+            
+            <label class="inputLabel">Password</label>
+            {{ form.password(class="inputFields") }}
+
+            <label class="inputLabel">Repeat Password</label>
+            {{ form.passwordRepeat(class="inputFields") }}
+
+            {{ form.submit(class="defButton") }}
+        </form>
+    </div>
+</div>
+{% endblock %}

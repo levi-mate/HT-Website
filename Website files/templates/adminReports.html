@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Reports
+{% endblock %}
+
+{% block script %}
+<script>
+    function modPop() {
+        document.getElementById("modifyPop").style.display = "flex";
+    }
+
+    function popupOpenCom() {
+        document.getElementById("journeyCombined").style.display = "flex";
+    }
+
+    function popupCloseCom() {
+        document.getElementById("journeyCombined").style.display = "none";
+    }
+
+    function popupOpenInd() {
+        document.getElementById("journeyIndividual").style.display = "flex";
+    }
+
+    function popupCloseInd() {
+        document.getElementById("journeyIndividual").style.display = "none";
+    }
+
+    function popupOpenTop() {
+        document.getElementById("topCustomer").style.display = "flex";
+    }
+
+    function popupCloseTop() {
+        document.getElementById("topCustomer").style.display = "none";
+    }
+
+    function popupOpenTopInd() {
+        document.getElementById("topCustomerInd").style.display = "flex";
+    }
+
+    function popupCloseTopInd() {
+        document.getElementById("topCustomerInd").style.display = "none";
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="account-grid">
+    <div class="account-grid-form">
+        <h2>Generate Reports</h2>
+        <a class="backButton" href="{{ url_for('admin_page') }}">< Admin Panel</a>
+        <br/>
+
+        <button class="accountButton" type="submit" onclick="popupOpenCom()">Combined Bookings</button>
+        <br/>
+        <button class="accountButton" type="submit" onclick="popupOpenInd()">Bookings per Journey</button>
+        <br/>
+        <button class="accountButton" type="submit" onclick="popupOpenTop()">Top Customers</button>
+        <br/>
+        <button class="accountButton" type="submit" onclick="popupOpenTopInd()">Top Customers per Journey</button>
+    </div>
+</div>
+
+<div id="journeyCombined" class="defPop flexCol">
+    <button style="border-radius: 10rem; width: 60px;" class="defButton" type="submit" onclick="popupCloseCom()">Close</button>
+    <h3>Combined Bookings</h3>
+
+    <form action="/report_com/" method="POST">
+        <div>
+            <p>From: </p>
+            <input type="datetime-local" name="bookingsFromCom" id="bookingsFromCom"/>
+            <p>To: </p>
+            <input type="datetime-local" name="bookingsToCom" id="bookingsToCom"/>
+        </div>
+
+        <div>
+            <br/>
+            <button type="submit">Generate Report</button>
+        </div>
+    </form>
+</div>
+
+<div id="journeyIndividual" class="defPop flexCol">
+    <button style="border-radius: 10rem; width: 60px;" class="defButton" type="submit" onclick="popupCloseInd()">Close</button>
+    <h3>Bookings per Journey</h3>
+
+    <form action="/report_ind/" method="POST">
+        <div>
+            <p>Journeys: </p>
+            <select name="reportIDInd" id="reportIDInd">
+                {% for journey in journeylist %}
+                <option value="{{ journey[0] }}">ID: {{ journey[0] }} || {{ journey[1] }} - {{ journey[3] }} || {{ journey[2] }} - {{ journey[4] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div>
+            <h3>Select Timeframe</h3>
+            <p>From: </p>
+            <input type="datetime-local" name="bookingsFromInd" id="bookingsFromInd"/>
+            <p>To: </p>
+            <input type="datetime-local" name="bookingsToInd" id="bookingsToInd"/>
+        </div>
+
+        <div>
+            <br/>
+            <button type="submit">Generate Report</button>
+        </div>
+    </form>
+</div>
+
+<div id="topCustomer" class="defPop flexCol">
+    <button style="border-radius: 10rem; width: 60px;" class="defButton" type="submit" onclick="popupCloseTop()">Close</button>
+    <h3>Top Customers</h3>
+
+    <form action="/report_cust/" method="POST">
+        <div>
+            <p>From: </p>
+            <input type="datetime-local" name="bookingsFromTop" id="bookingsFromTop"/>
+            <p>To: </p>
+            <input type="datetime-local" name="bookingsToTop" id="bookingsToTop"/>
+        </div>
+
+        <div>
+            <br/>
+            <button type="submit">Generate Report</button>
+        </div>
+    </form>
+</div>
+
+<div id="topCustomerInd" class="defPop flexCol">
+    <button style="border-radius: 10rem; width: 60px;" class="defButton" type="submit" onclick="popupCloseTopInd()">Close</button>
+    <h3>Top Customers per Journey</h3>
+
+    <form action="/report_custind/" method="POST">
+        <div>
+            <p>Journey: </p>
+            <select name="reportIDTopInd" id="reportIDTopInd">
+                {% for journey in journeylist %}
+                <option value="{{ journey[0] }}">ID: {{ journey[0] }} | {{ journey[1] }} - {{ journey[3] }} </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div>
+            <h3>Select Timeframe</h3>
+            <p>From: </p>
+            <input type="datetime-local" name="bookingsFromTopInd" id="bookingsFromTopInd"/>
+            <p>To: </p>
+            <input type="datetime-local" name="bookingsToTopInd" id="bookingsToTopInd"/>
+        </div>
+
+        <div>
+            <br/>
+            <button type="submit">Generate Report</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

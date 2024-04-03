@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Admin Account
+{% endblock %}
+
+{% block content %}
+<div class="account-grid">
+    <div class="account-grid-form">
+        <h1 style="margin-left: 20px; margin-right: 20px;"> Wecome admin {{ session['username'] }}! </h1>
+        <a class="accountButton" href="{{ url_for('admin_journey') }}">Journey Management</a>
+        <a class="accountButton" href="{{ url_for('admin_accounts') }}">Accounts Management</a>
+        <a class="accountButton" href="{{ url_for('admin_reports') }}">Reports</a>
+        <br/>
+        <br/>
+        <a class="accountButton" href="{{ url_for('changepwd') }}">Change Password</a>
+        <br/>
+        <a class="accountButton" href="{{ url_for('logout') }}">Logout</a>
+    </div>
+</div>
+{% endblock %}

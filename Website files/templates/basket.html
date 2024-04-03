@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Basket
+{% endblock %}
+
+{% block content %}
+<div class="basic-grid">
+    <form style="padding-left: 5%; padding-right: 5%;" class="basic-grid-form" action="/booking_confirm/" method="post">
+        <div class="flexCol">
+            <div style="border-top-left-radius: 0; border-top-right-radius: 0;" class="backBox">
+                <h2>Journey Summary</h2>
+                
+                <br/>
+                
+                <h3>{{ lookupdata[0] }} - {{ lookupdata[1] }}</h3>
+                <input type="hidden" name="cityD" id="cityD" value="{{ lookupdata[0] }}"/>
+                <input type="hidden" name="cityA" id="cityA" value="{{ lookupdata[1] }}"/>
+                
+                <h3>{{ dateD }}</h3>
+                <input type="hidden" name="dateD" id="dateD" value="{{ lookupdata[2] }}"/>
+
+                {% if strftime(lookupdata[5], '%Y-%m-%d') != "1980-01-01" %}
+                <h3>{{ lookupdata[3] }} - {{ lookupdata[4] }}</h3>
+                <input type="hidden" name="cityRD" id="cityRD" value="{{ lookupdata[3] }}"/>
+                <input type="hidden" name="cityRA" id="cityRA" value="{{ lookupdata[4] }}"/>
+
+                <h3>{{ dateRD }}</h3>
+                <input type="hidden" name="dateRD" id="dateRD" value="{{ lookupdata[5] }}"/>
+                {% endif %}
+                
+                <h3>Economy Seats: {{ lookupdata[6] }}</h3>
+                <input type="hidden" name="seatS" id="seatS" value="{{ lookupdata[6] }}"/>
+
+                {% if str(lookupdata[7]) != "0" %}
+                <h3>Business Seats: {{ lookupdata[7] }}</h3>
+                <input type="hidden" name="seatB" id="seatB" value="{{ lookupdata[7] }}"/>
+                {% endif %}
+
+                <h3>Departure Time:</h3>
+                {% for row in resultset %}
+                <div class="flexRow">
+                    <label for="{{ row[0] }}" class="radioSelection">
+                        <input type="radio" id="{{ row[0] }}" name="bookingchoiceD" value="{{ row[0] }}" checked>
+                        <table>
+                            <tr>
+                                <td>{{ row[2] }} - {{ row[4] }}|</td>
+                                <td>|Total: £{{ row[6] }}</td>
+                            </tr>
+                        </table>
+                        <input type="hidden" name="timeD" id="timeD" value="{{ row[2] }}">
+                        <input type="hidden" name="timeA" id="timeA" value="{{ row[4] }}">
+                        <input type="hidden" name="pricetotal" id="pricetotal" value="{{ row[6] }}">
+                    </label>
+                </div>
+                {% endfor %}
+
+                {% if lookupdata[5] != "1980-01-01" %}
+                <h3>Return Departure Time:</h3>
+                {% for row in resultset2 %}
+                <div class="flexRow">
+                    <label for="{{ row[0] }}" class="radioSelection">
+                        <input type="radio" id="{{ row[0] }}" name="bookingchoiceR" value="{{ row[0] }}" checked>
+                        <table>
+                            <tr>
+                                <td>{{ row[2] }} - {{ row[4] }}|</td>
+                                <td>|Total: £{{ row[6] }}</td>
+                            </tr>
+                        </table>
+                        <input type="hidden" name="timeRD" id="timeRD" value="{{ row[2] }}">
+                        <input type="hidden" name="timeRA" id="timeRA" value="{{ row[4] }}">
+                        <input type="hidden" name="pricetotal" id="pricetotal" value="{{ row[6] }}">
+                    </label>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            
+            {% if username == "0" %}
+            <div class="flexCol">
+                <h2>Please Login or Register to Continue</h2>
+                <a class="defButton" href="{{ url_for('login_page') }}">Login</a>
+                <a class="defButton" href="{{ url_for('register_page') }}">Register</a>
+            </div>
+            {% else %}
+            <input type="submit" class="defButton" value="Pay with PayFriend"/>
+            {% endif %}
+        </div>
+    </form>
+</div>
+{% endblock %}

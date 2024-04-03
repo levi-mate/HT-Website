@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block script %}
+<script>
+    function getarrivalcity(departureCity) {
+        var req = new XMLHttpRequest();
+
+        req.onreadystatechange = function() {
+            if (req.readyState === 4 && req.status === 200) {
+                var response = JSON.parse(req.responseText);
+
+                var arrivalSelect = document.getElementById("arrivalslist");
+                arrivalSelect.innerHTML = "";
+
+                response.returncities.forEach(function(city) {
+                    var option = document.createElement("option");
+                    option.value = city;
+                    option.text = city;
+                    arrivalSelect.appendChild(option);
+                });
+            }
+        };
+
+        req.open("GET", "/returncity/?q=" + departureCity);
+        req.send();
+    }
+
+    function currentDate() {
+        var currentDate = new Date();
+        var currentYear = currentDate.getFullYear();
+        var currentMonth = currentDate.getMonth() + 1;
+        var currentDay = currentDate.getDate();
+        
+        if (currentMonth < 10) {
+            currentMonth = '0' + currentMonth;
+        }
+        
+        if (currentDay < 10) {
+            currentDay = '0' + currentDay;
+        }
+        
+        currentDate = currentYear + '-' + currentMonth + '-' + currentDay;
+        document.getElementById("outdate").min = currentDate;
+
+        var maxDate = new Date(currentDate);
+        maxDate.setDate(maxDate.getDate() + 90);
+        var maxYear = maxDate.getFullYear();
+        var maxMonth = maxDate.getMonth() + 1;
+        var maxDay = maxDate.getDate();
+        
+        if (maxMonth < 10) {
+            maxMonth = '0' + maxMonth;
+        }
+        
+        if (maxDay < 10) {
+            maxDay = '0' + maxDay;
+        }
+        
+        var maxDateOutput = maxYear + '-' + maxMonth + '-' + maxDay;
+        document.getElementById("outdate").max = maxDateOutput;
+
+        document.getElementById("outdate").addEventListener("input", function() {
+            var selectedDate = new Date(this.value);
+            var dayOfWeek = selectedDate.getDay();
+
+            if (dayOfWeek === 0) {
+            alert("Our flights do not operate on Sundays. Please select a different date.");
+            this.value = "";
+            }
+        });
+    }
+
+    function returnDate() {
+        var departureDate = document.getElementById("outdate").value;
+        document.getElementById("returndate").min = departureDate;
+
+        document.getElementById("returndate").addEventListener("input", function() {
+            var selectedDate = new Date(this.value);
+            var dayOfWeek = selectedDate.getDay();
+
+            if (dayOfWeek === 0) {
+            alert("Our flights do not operate on Sundays. Please select a different date.");
+            this.value = "";
+            }
+        });
+    }
+
+    window.onload = function() {
+        currentDate();
+
+        const checkbox = document.getElementById("returnCheck");
+        const returnDate = document.getElementById("returndate");
+
+        checkbox.addEventListener("change", function() {
+            if (this.checked) {
+                returnDate.style.display = "grid";
+                returnDate.value = "";
+            } else {
+                returnDate.style.display = "none";
+                returnDate.value = "0";
+            }
+        });
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="main-grid">
+    <!--Flights tab-->
+    <form action="/journey/" method="post" class="booking-grid-container">
+        <div class="booking-grid-tab">
+            <h1>Flights</h1>
+        </div>
+
+        <div class="booking-grid">
+            <input id="returnCheck" style="display: none;" type="checkbox"/>
+            <label for="returnCheck" class="booking-grid-checkbox">Add Return</label>
+
+            <select name="departureslist" class="booking-grid-location-from" onchange="getarrivalcity(this.value)" placeholder="Depart from" autocomplete="off" required>
+                {% for departure in departurelist %}
+                    <option value="{{departure}}"> {{departure}} </option>
+                {% endfor %}
+            </select>
+
+            <Select id="arrivalslist" class="booking-grid-location-to" name="arrivalslist" placeholder="Arrive at" autocomplete="off" required></Select>
+            
+            <input id="outdate" onchange="returnDate()" onfocus="this.showPicker()" class="booking-grid-date-from" type="date" name="outdate" min="1980-01-01" required/>
+
+            <input id="returndate" onfocus="this.showPicker()" class="booking-grid-date-to" type="date" name="returndate" min="1980-01-01"/>
+            
+            <div class="booking-grid-passengers flexRow">
+                <p>Economy/ Business:</p>
+                <div class="flexRow2">
+                    <input id="economySeats" class="bookingInput" type="number" name="economySeats" max="120" value="1" required/>
+                    <input id="businessSeats" class="bookingInput" type="number" name="businessSeats" max="120" value="0"/>
+                </div>
+            </div>
+
+            <br/>
+            <input class="booking-grid-button defButton" type="submit" value="Show Booking"/>
+        </div>
+    </form>
+
+    <!--Extra content section-->
+    <div class="main-grid-save">
+        <h3 style="color: rgb(48, 161, 161)">Save with pre-booking</h3>
+        <p>Booking in advance can save you money and guarantee seat availability.</p>
+        <button class="extraContentButton" type="submit"><a href="{{ url_for('help_page') }}">Read more</a></button>
+    </div>
+
+    <div class="main-grid-whyus">
+        <h3 style="color: rgb(48, 161, 161)">Why book with us?</h3>
+        <p>Check out why we are the UK's leading booking company based on customer satisfaction.</p>
+        <button class="extraContentButton" type="submit"><a href="{{ url_for('aboutus_page') }}">Read more</a></button>
+    </div>
+
+    <!--Highlighted trips section-->
+    <div id="bristol" class="main-grid-city1 cityBlocks">
+        <div class="bottom">
+                <p>Newcastle to Bristol</p>
+                <p>from £64</p>
+        </div>
+    </div>
+
+    <div id="edinburgh" class="main-grid-city2 cityBlocks">
+        <div class="bottom">
+                <p>Cardiff ot Edinburgh</p>
+                <p>from £64</p>
+        </div>
+    </div>
+
+    <div id="manchester" class="main-grid-city3 cityBlocks">
+        <div class="bottom">
+                <p>London to Manchester</p>
+                <p>from £60</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Cancel Trip
+{% endblock %}
+
+{% block content %}
+<div class="basic-grid">
+    <div style="padding: 5%;" class="basic-grid-form">
+        <br/>
+        <h3>Your trip has been cancelled.</h3>
+        <br/>
+        <p>Sorry to see you go!</p>
+        <br/>
+        <p>£{{ refund }} has been refunded to your original payment method.</p>
+        <br/>
+        <br/>
+        <a style="padding: 5px;" class="defButton" href="{{ url_for('main_page') }}">Book Another Trip Here</a>
+        <br/>
+    </div>
+</div>
+{% endblock %}

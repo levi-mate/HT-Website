@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Generated Report
+{% endblock %}
+
+{% block content %}
+<div class="account-grid">
+    <div class="account-grid-form">
+        <h2>Generated Report:</h2>
+        <a class="backButton" href="{{ url_for('admin_page') }}">< Admin Panel</a>
+        <br/>
+
+        {% if reportData != Undefined and reportData != None %}
+        <div style="border-radius: 0;" class="backBox">
+            {% for report in reportData %}
+            <p style="border-style: solid; border-top: 0px; border-left: 0px; border-right: 0px;">Booking ID: {{ report[0] }} <br/> Customer ID: {{ report[3] }} <br/> {{ report[4] }} - {{ report[5] }} at {{ report[6] }} <br/><br/> Return: <br/> {{ report[7] }} - {{ report[8] }} at {{ report[9] }} <br/> Econ: {{ report[10] }} Business: {{ report[11] }} <br/><br/> Total: {{ report[12] }} <br/> Booked on: {{ report[13] }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if aid != Undefined and aid != None %}
+        <div style="border-radius: 0;" class="backBox">
+            <p>Top customer ID: {{ aid[0] }} <br/> Total spent: £{{ aid[1] }}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

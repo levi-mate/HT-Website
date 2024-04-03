@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Journey Management
+{% endblock %}
+
+{% block script %}
+<script>
+    //Modify function
+    function modPop() {
+        document.getElementById("modifyPop").style.display = "flex";
+    }
+
+    //Remove functions
+    function popupOpenAdd() {
+        document.getElementById("journeyAdd").style.display = "flex";
+    }
+
+    function popupCloseAdd() {
+        document.getElementById("journeyAdd").style.display = "none";
+    }
+
+    function popupOpenMod() {
+        document.getElementById("journeyModify").style.display = "flex";
+    }
+
+    function popupCloseMod() {
+        document.getElementById("journeyModify").style.display = "none";
+    }
+
+    function popupOpenRem() {
+        document.getElementById("journeyRemove").style.display = "flex";
+    }
+
+    function popupCloseRem() {
+        document.getElementById("journeyRemove").style.display = "none";
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="account-grid">
+    <div class="account-grid-form">
+        <h2>Manage Journeys</h2>
+        <a class="backButton" href="{{ url_for('admin_page') }}">< Admin Panel</a>
+        <br/>
+
+        <button class="accountButton" type="submit" onclick="popupOpenAdd()">Add Journeys</button>
+        <br/>
+        <button class="accountButton" type="submit" onclick="popupOpenMod()">Modify Journeys</button>
+        <br/>
+        <button class="accountButton" type="submit" onclick="popupOpenRem()">Remove Journeys</button>
+    </div>
+</div>
+
+<div id="journeyAdd" class="defPop flexCol">
+    <button style="border-radius: 10rem; width: 60px;" class="defButton" type="submit" onclick="popupCloseAdd()">Close</button>
+    <h3>Add New Journeys</h3>
+    <form action="/journey_add/" method="POST">
+        <div>
+            <h3>Departure City:</h3>
+            <input type="text" name="cityD" class="inputFields"/>
+            <h3>Departure Time:</h3>
+            <input type="text" name="timeD" class="inputFields"/>
+            <h3>Arrival City:</h3>
+            <input type="text" name="cityA" class="inputFields"/>
+            <h3>Arrival Time:</h3>
+            <input type="text" name="timeA" class="inputFields"/>
+            <h3>Standard Ticket Price:</h3>
+            <input type="text" name="price" class="inputFields"/>
+        </div>
+        <div class="flexCol">
+            <input type="submit" class="defButton" value="Add Journey"/>
+        </div>
+    </form>
+</div>
+
+<div id="journeyModify" class="defPop flexCol">
+    <button style="border-radius: 10rem; width: 60px;" class="defButton" type="submit" onclick="popupCloseMod()">Close</button>
+    <h3>Modify Journeys</h3>
+    
+    <table>
+    {% for row in journeys %}
+    <form action="/journey_mod/" method="POST">
+        <tr>
+            <td> 
+                <div>
+                || {{ row[1] }} to {{ row[3] }} ||
+                </div>
+                <div>
+                || {{ row[2] }} - {{ row[4] }} ||
+                </div>
+                <div>
+                || £{{ row[5] }} || 
+                </div>
+            </td>
+        </tr>
+        <tr id="modifyPop" style="display: flex; flex-wrap: wrap;">
+            <td>
+                <input type="text" name="cityDeparture" value="{{ row[1] }}"/>
+                <input type="text" name="timeDeparture" value="{{ row[2] }}"/>
+                <input type="text" name="cityArrival" value="{{ row[3] }}"/>
+                <input type="text" name="timeArrival" value="{{ row[4] }}"/>
+                <input type="text" name="priceStandard" value="{{ row[5] }}"/>
+                <div>
+                    <button type="submit" name="modify" value="{{ row[0] }}" onclick="return confirm('Are you sure you want to modify this journey?')">Modify Journey</button>
+                </div>
+            </td>
+        </tr>
+    </form>
+    {% endfor %}
+    </table>
+</div>
+
+<div id="journeyRemove" class="defPop flexCol">
+    <button style="border-radius: 10rem; width: 60px;" class="defButton" type="submit" onclick="popupCloseRem()">Close</button>
+    <h3>Remove Journeys</h3>
+    
+    <table>
+    {% for row in journeys %}
+    <form action="/journey_rem/" method="POST">
+        <tr>
+            <td> 
+                {{ row[1] }} to {{ row[3] }}
+                || {{ row[2] }} - {{ row[4] }}
+                || £{{ row[5] }}
+            </td>
+            <td>
+                <button type="submit" name="delete" value="{{ row[0] }}" onclick="return confirm('Are you absolutely sure you want to delete this journey? It will be permanently gone!')">Delete Journey</button>
+            </td>
+        </tr>
+    </form>
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}

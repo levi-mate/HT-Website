@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Account
+{% endblock %}
+
+{% block content %}
+<div class="basic-grid">
+    <div class="basic-grid-form">
+        <div style="margin-left: 20px; margin-right: 20px;" class="flexCol">
+            <h1> Wecome {{ session['username'] }}! </h1>
+            <a class="defButton" href="{{ url_for('mytrip_page') }}">My Trips</a>
+            <br/>
+            <a class="defButton" href="{{ url_for('changepwd') }}">Change Password</a>
+            <a class="defButton" href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

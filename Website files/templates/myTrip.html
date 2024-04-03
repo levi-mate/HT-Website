@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    My Trips
+{% endblock %}
+
+{% block script %}
+<script>
+    function popupOpenMod() {
+        document.getElementById("tripModify").style.display = "flex";
+    }
+
+    function popupCloseMod() {
+        document.getElementById("tripModify").style.display = "none";
+    }
+
+    function popupOpenRem() {
+        document.getElementById("tripRemove").style.display = "flex";
+    }
+
+    function popupCloseRem() {
+        document.getElementById("tripRemove").style.display = "none";
+    }
+
+    function currentDate(tripId) {
+        var currentDate = new Date();
+        var currentYear = currentDate.getFullYear();
+        var currentMonth = currentDate.getMonth() + 1;
+        var currentDay = currentDate.getDate();
+        
+        if (currentMonth < 10) {
+            currentMonth = '0' + currentMonth;
+        }
+        
+        if (currentDay < 10) {
+            currentDay = '0' + currentDay;
+        }
+        
+        currentDate = currentYear + '-' + currentMonth + '-' + currentDay;
+        document.getElementById("outdate_" + tripId).setAttribute("min", currentDate);
+
+        var maxDate = new Date(currentDate);
+        maxDate.setDate(maxDate.getDate() + 90);
+        var maxYear = maxDate.getFullYear();
+        var maxMonth = maxDate.getMonth() + 1;
+        var maxDay = maxDate.getDate();
+        
+        if (maxMonth < 10) {
+            maxMonth = '0' + maxMonth;
+        }
+        
+        if (maxDay < 10) {
+            maxDay = '0' + maxDay;
+        }
+        
+        var maxDateOutput = maxYear + '-' + maxMonth + '-' + maxDay;
+        document.getElementById("outdate_" + tripId).setAttribute("max", maxDateOutput);
+
+        document.getElementById("outdate_" + tripId).addEventListener("input", function() {
+            var selectedDate = new Date(this.value);
+            var dayOfWeek = selectedDate.getDay();
+
+            if (dayOfWeek === 0) {
+            alert("Our flights do not operate on Sundays. Please select a different date.");
+            this.value = "";
+            }
+        });
+    }
+
+    function returnDate(tripId) {
+        var departureDate = document.getElementById("outdate_" + tripId).value;
+        document.getElementById("returndate_" + tripId).setAttribute("min", departureDate);
+
+        document.getElementById("returndate_" + tripId).addEventListener("input", function() {
+            var selectedDate = new Date(this.value);
+            var dayOfWeek = selectedDate.getDay();
+
+            if (dayOfWeek === 0) {
+            alert("Our flights do not operate on Sundays. Please select a different date.");
+            this.value = "";
+            }
+        });
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="basic-grid">
+    <div class="basic-grid-form">
+        <h2>My Trips</h2>
+
+        <button class="defButton" onclick="popupOpenMod()">Update Trips</button>
+        <br/>
+        <button class="defButton" onclick="popupOpenRem()">Cancel Trips</button>
+        <br/>
+        <a style="padding: 5px;" class="defButton" href="{{ url_for('main_page') }}">Book New Trips Here</a>
+        <br/>
+        <br/>
+
+        {% for trip in resultset %}
+        <div class="flexCol backBox">
+            Booking ID: {{ trip[0] }}
+            <input type="hidden" name="bid" id="bid" value="{{ trip[0] }}"/>
+            <br/>
+            Booked on: {{ trip[13].strftime('%d-%m-%Y %H:%M') }}
+            <br/>
+            <br/>
+            {{ trip[4] }} to {{ trip[5] }}
+            <br/>
+            Departure: {{ trip[6].strftime('%d-%m-%Y %H:%M') }}
+            <br/>
+            <br/>
+            {% if trip[9].strftime('%Y-%m-%d') != "1980-01-01" %}
+            {{ trip[7] }} to {{ trip[8] }}
+            <br/>
+            Return: {{ trip[9].strftime('%d-%m-%Y %H:%M') }}
+            <br/>
+            <br/>
+            {% endif %}
+            {% if trip[10] != 0 %}
+            Economy Seats: {{ trip[10] }}
+            {% endif %}
+            {% if trip[11] != 0 %}
+            <br/>
+            Business Seats: {{ trip[11] }}
+            {% endif %}
+            <br/>
+            <br/>
+            Total Price: £{{ trip[12] }}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div id="tripModify" class="defPop flexCol">
+    <button style="border-radius: 10rem; width: 60px;" class="defButton" type="submit" onclick="popupCloseMod()">Close</button>
+    <h3>Update Your Trips</h3>
+
+    <table>
+        {% for trip in resultset %}
+        <form action="/trip_modify/" method="POST">
+            <tr>
+                <td>
+                    {{ trip[0] }}
+                    <br/>
+                    {{ trip[4] }} to {{ trip[5] }}
+                    <br/>
+                    Departure: {{ trip[6].strftime('%d-%m-%Y %H:%M') }}
+                    <br/>
+                    {% if trip[9].strftime('%Y-%m-%d') != "1980-01-01" %}
+                    {{ trip[7] }} to {{ trip[8] }}
+                    <br/>
+                    Return: {{ trip[9].strftime('%d-%m-%Y %H:%M') }}
+                    {% endif %}
+                    <br/>
+                    {% if trip[10] != 0 %}
+                    Economy Seats: {{ trip[10] }}
+                    {% endif %}
+                    {% if trip[11] != 0 %}
+                    <br/>
+                    Business Seats: {{ trip[11] }}
+                    {% endif %}
+                    <br/>
+                    Total Price: £{{ trip[12] }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Departure Date:
+                    <input class="inputFields" type="date" id="outdate_{{ trip[0] }}" name="dateDeparture" value="{{ trip[6] }}" onclick="currentDate('{{ trip[0] }}')" required/>
+                    <input type="hidden" id="jid" name="jid" value="{{ trip[1] }}"/>
+                    <input type="hidden" id="cityD" name="cityD" value="{{ trip[4] }}"/>
+                    <input type="hidden" id="cityA" name="cityA" value="{{ trip[5] }}"/>
+                    <br/>
+                    Return Date:
+                    <input class="inputFields" type="date" id="returndate_{{ trip[0] }}" name="dateDepartureReturn" value="{{ trip[9] }}" onclick="returnDate('{{ trip[0] }}')"/>
+                    <input type="hidden" id="jidR" name="jidR" value="{{ trip[2] }}"/>
+                    <input type="hidden" id="cityRD" name="cityRD" value="{{ trip[7] }}"/>
+                    <input type="hidden" id="cityRA" name="cityRA" value="{{ trip[8] }}"/>
+                    <br/>
+                    Economy Seats:
+                    <input class="inputFields" type="text" name="seatEconomy" value="{{ trip[10] }}"/>
+                    <br/>
+                    Business Seats:
+                    <input class="inputFields" type="text" name="seatBusiness" value="{{ trip[11] }}"/>
+                    <div>
+                        <button type="submit" name="modify" value="{{ trip[0] }}" onclick="return confirm('Are you sure you want to update this trip?')">Update Trip</button>
+                    </div>
+                </td>
+            </tr>
+        </form>
+        {% endfor %}
+    </table>
+</div>
+
+<div id="tripRemove" class="defPop flexCol">
+    <button style="border-radius: 10rem; width: 60px;" class="defButton" type="submit" onclick="popupCloseRem()">Close</button>
+    <h3>Cancel Your Trips</h3>
+
+    <table>
+        {% for trip in resultset %}
+        <form action="/trip_cancel/" method="POST">
+            <tr>
+                <td>
+                    {{ trip[0] }}
+                    <br/>
+                    {{ trip[4] }} to {{ trip[5] }}
+                    <br/>
+                    Departure: {{ trip[6].strftime('%d-%m-%Y %H:%M') }}
+                    <input type="hidden" name="dateD" id="dateD" value="{{ trip[6] }}"/>
+                    <br/>
+                    {% if trip[9].strftime('%Y-%m-%d') != "1980-01-01" %}
+                    {{ trip[7] }} to {{ trip[8] }}
+                    <br/>
+                    Return: {{ trip[9].strftime('%d-%m-%Y %H:%M') }}
+                    {% endif %}
+                    <br/>
+                    {% if trip[10] != 0 %}
+                    Economy Seats: {{ trip[10] }}
+                    {% endif %}
+                    {% if trip[11] != 0 %}
+                    <br/>
+                    Business Seats: {{ trip[11] }}
+                    {% endif %}
+                    <br/>
+                    Total Price: £{{ trip[12] }}
+                    <input type="hidden" name="totalprice" id="totalprice" value="{{ trip[12] }}"/>
+                </td>
+                <td>
+                    <button type="submit" name="delete" value="{{ trip[0] }}" onclick="return confirm('Are you sure you want to cancel this trip?')">Cancel Trip</button>
+                </td>
+            </tr>
+        </form>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

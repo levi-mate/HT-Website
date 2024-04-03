@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='mainStyle.css') }}" />
+        <title>
+            {% block title %}
+
+            {% endblock %}
+        </title>
+        <link rel="shortcut icon" type="image/jpg" href="{{ url_for('static', filename='Logo.svg') }}"/>
+        {% block script %}
+
+        {% endblock %}
+    </head>
+
+    <body>
+        <!--Burger Menu-->
+        <div id="burgerMenu" class="burgerMenu">
+            <button style="margin-top: 3px; margin-left: 2px; width: 47px; height: 47px; border: 0; background-color: rgb(220, 220, 220); cursor: pointer;" onclick="popupCloseBurger()"><img src = "{{ url_for('static', filename='Menu.svg') }}" alt="Menu"/></button>
+            
+            <div class="burgerNenuContent">
+                {% if session['username'] %}
+                    {% if session['usertype'] == 'admin' %}
+                    <a class="burgerMenuContentElement" href="{{ url_for('admin_page') }}">Admin Panel</a>
+                    <br/>
+                    <br/>
+                    {% else %}
+                    <a class="burgerMenuContentElement" href="{{ url_for('account_page') }}">Account</a>
+                    <a class="burgerMenuContentElement" href="{{ url_for('mytrip_page') }}">My Trips</a>
+                    <a class="burgerMenuContentElement lg-hide" href="{{ url_for('basket_page') }}">Basket</a>
+                    <br/>
+                    <br/>
+                    {% endif %}
+                {% else %}
+                <a class="burgerMenuContentElement" href="{{ url_for('login_page') }}">Login</a>
+                <a class="burgerMenuContentElement" href="{{ url_for('register_page') }}">Register</a>
+                <br/>
+                <br/>
+                {% endif %}
+                <a class="burgerMenuContentElement lg-hide" href="{{ url_for('main_page') }}">Book Now</a>
+                <br/>
+                <br/>
+                <a class="burgerMenuContentElement lg-hide" href="{{ url_for('help_page') }}">Info</a>
+                <a class="burgerMenuContentElement lg-hide" href="{{ url_for('privacypolicy_page') }}">Privacy Policy</a>
+                <a class="burgerMenuContentElement lg-hide" href="{{ url_for('aboutus_page') }}">About Us</a>
+                {% if session['username'] %}
+                <br/>
+                <a class="burgerMenuContentElement" href="{{ url_for('logout') }}">Logout</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!--Nav Bar-->
+        <nav class="nav-grid">
+            <!--Nav Left Menu-->
+            <div class="nav-grid-menu">
+                <script>
+                    function popupOpenBurger() {
+                        var burgerMenu = document.getElementById("burgerMenu")
+                        burgerMenu.style.transform = "translateX(-100%)";
+                        burgerMenu.style.display = "flex";
+                        setTimeout(function() { 
+                            burgerMenu.style.transform = "translateX(0%)";
+                            burgerMenu.style.transition = "transform 0.2s ease-out"; 
+                        }, 10);
+                    }
+
+                    function popupCloseBurger() {
+                        var burgerMenu = document.getElementById("burgerMenu");
+                        burgerMenu.style.transform = "translateX(0%)";
+                        burgerMenu.style.transition = "transform 0.2s ease-out";
+                        setTimeout(function() {
+                            burgerMenu.style.transform = "translateX(-100%)";
+                        }, 10);
+                        setTimeout(function() {
+                            burgerMenu.style.display = "none";
+                        }, 200);
+                    }
+                </script>
+                
+                <button class="burgerMenuButton" onclick="popupOpenBurger()"><img src = "{{ url_for('static', filename='Menu.svg') }}" alt="Menu"/></button>
+            </div>
+
+            <!--Nav Horizon Travels Logo-->
+            <div class="nav-grid-logo">
+                <img src = "{{ url_for('static', filename='Logo2.svg') }}" width="100px" height="100px" alt="Logo"/>
+            </div>
+
+            <!--Nav Horizon Travels Title-->
+            <div class="nav-grid-title">
+                <h2>Horizon Travels</h2>
+            </div>
+            
+            <!--Nav Buttons-->
+            <div class="nav-grid-buttons md-hide">
+                <a class="buttonPageNav md-hide" href="{{ url_for('main_page') }}">Book Now</a>
+                {% if session['logged_in'] != True %}
+                <a class="buttonPageNav md-hide" href="{{ url_for('register_page') }}">Register</a>
+                <a class="buttonPageNav md-hide" href="{{ url_for('login_page') }}">Login</a>
+                {% else %}
+                <a class="buttonPageNav md-hide" href="{{ url_for('help_page') }}">Info</a>
+                {% endif %}
+                {% if session['username'] %}
+                <a class="buttonPageNav md-hide" href="{{ url_for('basket_page') }}">Basket</a>
+                {% endif %}
+            </div>
+        </nav>
+
+        <!--Error Messages-->
+        <div class="main-grid-error errorMsg">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p class="flexRow"> {{ message }} </p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        </div>
+
+        <!--Main Content Section-->
+        <main style="margin-top: 100px;" class="flex grid-b">
+            {% block content %}
+                
+            {% endblock %}
+        </main>
+
+        <!--Footer-->
+        <footer>
+            <div class="footer">
+                <div style="color: white;" class="sm-hide">
+                    <h3>Contact</h3>
+                    <p>09999 999999</p>
+                    <p>horizontravels@fakemail.co.uk</p>
+                </div>
+                
+                <div class="md-hide">
+                    <button class="footerButton" type="submit"><a href="{{ url_for('help_page') }}">Help</a></button>
+                    <button class="footerButton" type="submit"><a href="{{ url_for('privacypolicy_page') }}">Privacy policy</a></button>
+                    <button class="footerButton" type="submit"><a href="{{ url_for('aboutus_page') }}">About us</a></button>
+                </div>
+
+                <div style="background-color: rgb(221, 221, 221); border-radius: 5rem; padding: 10px;">
+                    <img src = "{{ url_for('static', filename='Logo2.svg') }}" width="100px" height="100px" alt="Logo"/>
+                </div>
+            </div>
+
+            <div style="background-color: rgb(220, 220, 220);" class="center">
+                <h3>Horizon Travels</h3>
+            </div>
+        </footer>
+    </body>
+</html>

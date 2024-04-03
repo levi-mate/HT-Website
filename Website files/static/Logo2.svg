@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 500 500" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1.31146,0,0,1.31146,-78.7475,-56.1916)">
+        <path d="M240.172,275.753L234.011,274.808C234.011,274.808 229.756,285.425 227.704,300.274C225.466,316.463 227.186,330.954 227.186,330.954L244.966,325.452C244.966,325.452 241.866,314.972 240.172,302.418C238.368,289.05 240.172,275.753 240.172,275.753Z" style="fill:white;fill-opacity:0;"/>
+        <path d="M254.361,236.035C254.361,236.035 250.413,243.622 246.631,252.415C241.798,263.648 240.792,270.656 240.792,270.656L235.76,269.757C235.76,269.757 239.839,259.31 244.414,251.499C249.867,242.189 254.361,236.035 254.361,236.035Z" style="fill:white;fill-opacity:0;"/>
+        <g transform="matrix(0.706968,0,0,0.706968,165.302,72.5762)">
+            <circle cx="177.378" cy="108.398" r="119.537" style="fill:white;fill-opacity:0;"/>
+            <g transform="matrix(1.07856,0,0,1.07856,-148.884,-42.0523)">
+                <path d="M405.374,180.766C398.806,242.859 330.407,359.366 286.299,429.035C284.831,428.083 269.52,418.002 260.231,406.499C249.118,392.736 244.514,377.841 244.514,377.841L219.877,386.513C219.877,386.513 219.877,401.323 226.412,425.474C234.807,456.496 246.303,480.345 248.678,485.115C239.579,471.826 92.35,255.506 92.35,171.656C92.35,85.134 162.595,14.888 249.118,14.888C272.617,14.888 294.917,20.07 314.934,29.353C310.851,28.896 306.701,28.662 302.497,28.662C241.329,28.662 191.667,78.323 191.667,139.492C191.667,200.66 241.329,250.321 302.497,250.321C349.081,250.321 388.991,221.519 405.374,180.766ZM236.228,305.447L228.149,304.208C228.149,304.208 222.568,318.132 219.877,337.606C216.942,358.837 219.198,377.841 219.198,377.841L242.516,370.626C242.516,370.626 238.45,356.882 236.228,340.418C233.863,322.886 236.228,305.447 236.228,305.447ZM254.837,253.359C254.837,253.359 248.943,261.43 241.792,273.639C235.792,283.883 230.442,297.584 230.442,297.584L237.042,298.763C237.042,298.763 238.361,289.572 244.699,274.841C249.659,263.309 254.837,253.359 254.837,253.359Z" style="fill:rgb(48,161,161);"/>
+            </g>
+        </g>
+        <g transform="matrix(0.762512,0,0,0.762512,167.764,78.8694)">
+            <g transform="matrix(-0.0245714,0.999698,-0.999698,-0.0245714,58.201,76.296)">
+                <text x="0px" y="0px" style="font-family:'Tahoma-Bold', 'Tahoma', sans-serif;font-weight:700;font-size:35px;fill:rgb(130,130,130);">H</text>
+            </g>
+            <g transform="matrix(0.206437,0.97846,-0.97846,0.206437,57.8362,103.096)">
+                <text x="0px" y="0px" style="font-family:'Tahoma-Bold', 'Tahoma', sans-serif;font-weight:700;font-size:35px;fill:rgb(130,130,130);">o</text>
+            </g>
+            <g transform="matrix(0.387672,0.921798,-0.921798,0.387672,62.4931,124.208)">
+                <text x="0px" y="0px" style="font-family:'Tahoma-Bold', 'Tahoma', sans-serif;font-weight:700;font-size:35px;fill:rgb(130,130,130);">r</text>
+            </g>
+            <g transform="matrix(0.490124,0.871653,-0.871653,0.490124,68.457,138.209)">
+                <text x="0px" y="0px" style="font-family:'Tahoma-Bold', 'Tahoma', sans-serif;font-weight:700;font-size:35px;fill:rgb(130,130,130);">i</text>
+            </g>
+            <g transform="matrix(0.606755,0.794889,-0.794889,0.606755,73.4115,147.574)">
+                <text x="0px" y="0px" style="font-family:'Tahoma-Bold', 'Tahoma', sans-serif;font-weight:700;font-size:35px;fill:rgb(130,130,130);">z</text>
+            </g>
+            <g transform="matrix(0.747454,0.664313,-0.664313,0.747454,84.5203,162.367)">
+                <text x="0px" y="0px" style="font-family:'Tahoma-Bold', 'Tahoma', sans-serif;font-weight:700;font-size:35px;fill:rgb(130,130,130);">o</text>
+            </g>
+            <g transform="matrix(0.870911,0.491442,-0.491442,0.870911,100.706,176.812)">
+                <text x="0px" y="0px" style="font-family:'Tahoma-Bold', 'Tahoma', sans-serif;font-weight:700;font-size:35px;fill:rgb(130,130,130);">n</text>
+            </g>
+            <g transform="matrix(0.979813,0.199918,-0.199918,0.979813,129.983,191.408)">
+                <text x="0px" y="0px" style="font-family:'Tahoma-Bold', 'Tahoma', sans-serif;font-weight:700;font-size:35px;fill:rgb(130,130,130);">T</text>
+            </g>
+            <g transform="matrix(0.999898,0.0142695,-0.0142695,0.999898,150.995,195.501)">
+                <text x="0px" y="0px" style="font-family:'Tahoma-Bold', 'Tahoma', sans-serif;font-weight:700;font-size:35px;fill:rgb(130,130,130);">r</text>
+            </g>
+            <g transform="matrix(0.989885,-0.141874,0.141874,0.989885,166.266,195.982)">
+                <text x="0px" y="0px" style="font-family:'Tahoma-Bold', 'Tahoma', sans-serif;font-weight:700;font-size:35px;fill:rgb(130,130,130);">a</text>
+            </g>
+            <g transform="matrix(0.939736,-0.3419,0.3419,0.939736,187.023,192.902)">
+                <text x="0px" y="0px" style="font-family:'Tahoma-Bold', 'Tahoma', sans-serif;font-weight:700;font-size:35px;fill:rgb(130,130,130);">v</text>
+            </g>
+            <g transform="matrix(0.85333,-0.521371,0.521371,0.85333,206.111,185.983)">
+                <text x="0px" y="0px" style="font-family:'Tahoma-Bold', 'Tahoma', sans-serif;font-weight:700;font-size:35px;fill:rgb(130,130,130);">e</text>
+            </g>
+            <g transform="matrix(0.765487,-0.643452,0.643452,0.765487,223.65,174.817)">
+                <text x="0px" y="0px" style="font-family:'Tahoma-Bold', 'Tahoma', sans-serif;font-weight:700;font-size:35px;fill:rgb(130,130,130);">l</text>
+            </g>
+            <g transform="matrix(0.668479,-0.743731,0.743731,0.668479,231.966,168.181)">
+                <text x="0px" y="0px" style="font-family:'Tahoma-Bold', 'Tahoma', sans-serif;font-weight:700;font-size:35px;fill:rgb(130,130,130);">s</text>
+            </g>
+        </g>
+    </g>
+</svg>

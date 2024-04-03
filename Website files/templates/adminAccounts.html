@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Accounts Management
+{% endblock %}
+
+{% block script %}
+<script>
+    function popupOpenAdd() {
+        document.getElementById("accountAdd").style.display = "flex";
+    }
+
+    function popupCloseAdd() {
+        document.getElementById("accountAdd").style.display = "none";
+    }
+
+    function popupOpenMod() {
+        document.getElementById("accountModify").style.display = "flex";
+    }
+
+    function popupCloseMod() {
+        document.getElementById("accountModify").style.display = "none";
+    }
+
+    function popupOpenRem() {
+        document.getElementById("accountRemove").style.display = "flex";
+    }
+
+    function popupCloseRem() {
+        document.getElementById("accountRemove").style.display = "none";
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="account-grid">
+    <div class="account-grid-form">
+        <h2>Manage Accounts</h2>
+        <a class="backButton" href="{{ url_for('admin_page') }}">< Admin Panel</a>
+        <br/>
+
+        <button class="accountButton" type="submit" onclick="popupOpenAdd()">Add Accounts</button>
+        <br/>
+        <button class="accountButton" type="submit" onclick="popupOpenMod()">Modify Accounts</button>
+        <br/>
+        <button class="accountButton" type="submit" onclick="popupOpenRem()">Remove Accounts</button>
+    </div>
+</div>
+
+<div id="accountAdd" class="defPop flexCol">
+    <button style="border-radius: 10rem; width: 60px;" class="defButton" type="submit" onclick="popupCloseAdd()">Close</button>
+    <h3>Add New Accounts</h3>
+    <form action="/account_add/" method="POST">
+        <div>
+            <h3>Username:</h3>
+            <input type="text" name="username" class="inputFields" required/>
+            <h3>First Name:</h3>
+            <input type="text" name="firstName" class="inputFields" required/>
+            <h3>Last Name:</h3>
+            <input type="text" name="lastName" class="inputFields" required/>
+            <h3>Email:</h3>
+            <input type="text" name="email" class="inputFields" required/>
+            <h3>Password:</h3>
+            <input type="text" name="password" class="inputFields" min="8" required/>
+        </div>
+        <div class="flexCol">
+            <input type="submit" class="defButton" value="Add Account"/>
+        </div>
+    </form>
+</div>
+
+<div id="accountModify" class="defPop flexCol">
+    <button style="border-radius: 10rem; width: 60px;" class="defButton" type="submit" onclick="popupCloseMod()">Close</button>
+    <h3>Modify Accounts</h3>
+    
+    <table border = 1>
+    {% for row in accounts %}
+        {% if row[7] == 'basic' %}
+        <form action="/account_mod/" method="POST">
+            <tr>
+                <td> 
+                    <div>
+                    | Username: {{ row[1] }} |
+                    </div>
+                    <div>
+                    | First Name: {{ row[2] }} |
+                    </div>
+                    <div>
+                    | Last Name: {{ row[3] }} |
+                    </div>
+                    <div>
+                    | Email: {{ row[4] }} |
+                    </div>
+                    <div>
+                    | Password: ******** | 
+                    </div>
+                </td>
+            </tr>
+            <tr id="modifyPop" style="display: flex; flex-wrap: wrap;">
+                <td>
+                    <input type="text" name="username" value="{{ row[1] }}"/>
+                    <input type="text" name="firstName" value="{{ row[2] }}"/>
+                    <input type="text" name="lastName" value="{{ row[3] }}"/>
+                    <input type="text" name="email" value="{{ row[4] }}"/>
+                    <div>
+                        <button type="submit" name="modify" value="{{ row[0] }}" onclick="return confirm('Are you sure you want to modify this account?')">Modify Account</button>
+                    </div>
+                </td>
+            </tr>
+        </form>
+        {% endif %}
+    {% endfor %}
+    </table>
+</div>
+
+<div id="accountRemove" class="defPop flexCol">
+    <button style="border-radius: 10rem; width: 60px;" class="defButton" type="submit" onclick="popupCloseRem()">Close</button>
+    <h3>Remove Accounts</h3>
+    
+    <table border = 1>
+    {% for row in accounts %}
+        {% if row[7] == 'basic' %}
+        <form action="/account_rem/" method="POST">
+            <tr>
+                <td> 
+                    <div>
+                    | Username: {{ row[1] }} |
+                    </div>
+                    <div>
+                    | Customer Name: {{ row[2] }} |
+                    </div>
+                    <div>
+                    | Email: {{ row[3] }} |
+                    </div>
+                    <div>
+                    | Password: ******** | 
+                    </div>
+                </td>
+                <td> <button type="submit" name="delete" value="{{ row[0] }}" onclick="return confirm('Are you absolutely sure you want to delete this account? It will be permanently gone!')">Delete Account</button> </td>
+            </tr>
+        </form>
+        {% endif %}
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}

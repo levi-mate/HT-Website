@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block content %}
+<div class="basic-grid">
+    <div class="basic-grid-form">
+        <h1>Login</h1>
+    
+        <form method="post" action="/login">
+            {{ form.csrf_token }}
+            {{ form.hidden_tag() }}
+
+            <div class="flexCol">
+                <label class="inputLabel">Username</label>
+                {{ form.username(class="inputFields") }}
+
+                <label class="inputLabel">Password</label>
+                {{ form.password(class="inputFields") }}
+                
+                <div class="flexRow">    
+                    {{ form.submit(class="defButton") }}
+                
+                    <button class="defButton"><a href="{{ url_for('register_page') }}">Register Here</a></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

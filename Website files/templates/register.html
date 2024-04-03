@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block content %}
+<div class="basic-grid">
+    <div class="basic-grid-form">
+        <h1>Register</h1>
+
+        <form method="post" action="/register" class="flexCol">
+            {{ form.csrf_token }}
+            {{ form.hidden_tag() }}
+
+            <label class="inputLabel">Email</label>
+            {{ form.email(class="inputFields") }}
+
+            <label class="inputLabel">Username</label>
+            {{ form.username(class="inputFields") }}
+
+            <label class="inputLabel">First Name</label>
+            {{ form.firstName(class="inputFields") }}
+
+            <label class="inputLabel">Last Name</label>
+            {{ form.lastName(class="inputFields") }}
+
+            <label class="inputLabel">Password</label>
+            {{ form.password(class="inputFields") }}
+
+            <label class="inputLabel">Repeat Password</label>
+            {{ form.passwordRepeat(class="inputFields") }}
+
+            <div class="flexRow">
+                {{ form.submit(class="defButton") }}
+
+                <button class="defButton"><a href="{{ url_for('login_page') }}">Login Here</a></button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
